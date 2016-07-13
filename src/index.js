@@ -1,8 +1,9 @@
 import { createSelectorCreator } from 'reselect'
 import { memoizeMap, memoizeList } from './memoize'
 
-export const createArraySelector = createSelectorCreator(memoizeList, {
-  mapper(arr, callback) {
+export const arrayMemoize = (fn, equalityCheck) => memoizeList(fn, {
+  equalityCheck,
+  mapper(arr, callback){
     const result = []
     for (let i = 0; i < arr.length; i++) {
       result[i] = callback(arr[i])
@@ -11,7 +12,8 @@ export const createArraySelector = createSelectorCreator(memoizeList, {
   },
 })
 
-export const createObjectSelector = createSelectorCreator(memoizeMap, {
+export const objectMemoize = (fn, equalityCheck) => memoizeMap(fn, {
+  equalityCheck,
   unique: true,
   mapper(obj, callback) {
     const result = {}
@@ -22,14 +24,22 @@ export const createObjectSelector = createSelectorCreator(memoizeMap, {
   },
 });
 
-export const createListSelector = createSelectorCreator(memoizeList, {
+export const listMemoize = (fn, equalityCheck) => memoizeList(fn, {
+  equalityCheck,
   mapper(mapable, callback) {
     return mapable.map(callback)
   },
 })
 
-export const createMapSelector = createSelectorCreator(memoizeMap, {
+export const mapMemoize = (fn, equalityCheck) => memoizeMap(fn, {
+  equalityCheck,
   mapper(mapable, callback) {
     return mapable.map((v, k) => callback(k, v))
   },
 })
+
+export const createArraySelector = createSelectorCreator(arrayMemoize);
+export const createObjectSelector = createSelectorCreator(objectMemoize);
+export const createListSelector = createSelectorCreator(listMemoize);
+export const createMapSelector = createSelectorCreator(mapMemoize);
+
