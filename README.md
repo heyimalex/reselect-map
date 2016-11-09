@@ -49,7 +49,7 @@ So why would you use this? The answer is that you probably shouldn't! However, i
 
 ## API
 
-The only thing to know is that the first dependency/selector passed is the one that gets mapped over, and all other selectors work just like they do in reselect proper.
+The only thing to know is that the first dependency/selector passed is the one that gets mapped over, and all other selectors work just like they do in reselect proper. Additionally, key-based selectors like `createObjectSelector` and `createMapSelector` pass the key as the final argument.
 
 **NOTICE**: This package makes use of the builtin Map. If you need to support environments without Map, you are going to have to polyfill it.
 
@@ -76,7 +76,7 @@ console.log(mul(exampleState)) // [5, 10, 15]
 
 ### createObjectSelector
 
-Takes an object, runs the value at each key through the result function, and returns an object with the results.
+Takes an object, runs the value at each key through the result function, and returns an object with the results. The key is passed as the last argument to the selector function.
 
 ```javascript
 import { createObjectSelector } from 'reselect-map'
@@ -89,10 +89,10 @@ const exampleState = {
 const mul = createObjectSelector(
   state => state.numbers,
   state => state.multiplier,
-  (number, multiplier) => number * multiplier
+  (number, multiplier, key) => `${key}:${number * multiplier}`
 )
 
-console.log(mul(exampleState)) // { a: 5, b: 10 }
+console.log(mul(exampleState)) // { a: 'a:5', b: 'b:10' }
 ```
 
 ### createListSelector
@@ -119,7 +119,7 @@ console.log(String(mul(exampleState))) // List [5, 10, 15]
 
 ### createMapSelector
 
-Like the sequence selector, but it expects the map function to provide a second argument to the callback that represents the key. This is mostly to support Immutable's Collection.Keyed types.
+Like the sequence selector, but it expects the map function to provide a second argument to the callback that represents the key. This key is passed as the last argument to the selector function. This is mostly to support Immutable's Collection.Keyed types.
 
 ```javascript
 import { createMapSelector } from 'reselect-map'
@@ -133,10 +133,10 @@ const exampleState = {
 const mul = createMapSelector(
   state => state.numbers,
   state => state.multiplier,
-  (number, multiplier) => number * multiplier
+  (number, multiplier, key) => `${key}:${number * multiplier}`
 )
 
-console.log(String(mul(exampleState))) // Map { "a": 5, "b": 10 }
+console.log(String(mul(exampleState))) // Map { "a": "a:5", "b": "b:10" }
 ```
 
 ### Need more?

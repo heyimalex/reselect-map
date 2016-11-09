@@ -145,6 +145,44 @@ describe('createObjectSelector', () => {
     expect(sel.recomputations()).toBe(7)
   })
 
+  test('with key argument', () => {
+    const sel = createObjectSelector(
+      state => state.numbers,
+      state => state.mul1,
+      state => state.mul2,
+      (element, mul1, mul2, key) => `${key}:${element * mul1 * mul2}`
+    )
+
+    let state = {
+      numbers: { a: 1, b: 2 },
+      mul1: 1,
+      mul2: 1,
+    }
+
+    expect(sel(state)).toEqual({ a: 'a:1', b: 'b:2' })
+    expect(sel.recomputations()).toBe(2)
+
+    expect(sel(state)).toEqual({ a: 'a:1', b: 'b:2' })
+    expect(sel.recomputations()).toBe(2)
+
+    state.numbers = { a: 1, b: 2 }
+    expect(sel(state)).toEqual({ a: 'a:1', b: 'b:2' })
+    expect(sel.recomputations()).toBe(2)
+
+    state.mul1 = 2;
+    expect(sel(state)).toEqual({ a: 'a:2', b: 'b:4' })
+    expect(sel.recomputations()).toBe(4)
+
+    state.mul1 = 1;
+    state.mul2 = 2;
+    expect(sel(state)).toEqual({ a: 'a:2', b: 'b:4' })
+    expect(sel.recomputations()).toBe(6)
+
+    state.numbers = { a: 1, b: 1 }
+    expect(sel(state)).toEqual({ a: 'a:2', b: 'b:2' })
+    expect(sel.recomputations()).toBe(7)
+  })
+
 })
 
 describe('createListSelector', () => {

@@ -114,4 +114,29 @@ describe('memoizeMap', () => {
     expect(recomputations).toBe(4)
   })
 
+  test('with key argument', () => {
+    let recomputations = 0;
+    let func = (v, mul, k) => {
+      recomputations++;
+      return `${k}:${v * mul}`;
+    };
+    let mapper = (obj, callback) => {
+      const result = {}
+      Object.keys(obj).forEach((key) => {
+        if (obj.hasOwnProperty(key)) {
+          result[key] = callback(key, obj[key])
+        }
+      })
+      return result;
+    }
+    const mem = memoizeMap(func, { mapper })
+
+    expect(mem({ a: 1, b: 2 }, 5)).toEqual({ a: 'a:5', b: 'b:10' })
+    expect(mem({ a: 1, b: 2 }, 5)).toEqual({ a: 'a:5', b: 'b:10' })
+    expect(recomputations).toBe(2)
+
+    expect(mem({ a: 1, b: 2 }, 2)).toEqual({ a: 'a:2', b: 'b:4' })
+    expect(recomputations).toBe(4)
+  })
+
 })
