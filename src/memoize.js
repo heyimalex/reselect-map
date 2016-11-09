@@ -77,7 +77,7 @@ class CacheMap {
         }
       }
 
-      const result = fn(value, ...args)
+      const result = fn(value, ...args, key)
       nextCache.set(key, { value, result })
       return result
     }

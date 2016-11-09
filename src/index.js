@@ -42,4 +42,3 @@ export const createArraySelector = createSelectorCreator(arrayMemoize);
 export const createObjectSelector = createSelectorCreator(objectMemoize);
 export const createListSelector = createSelectorCreator(listMemoize);
 export const createMapSelector = createSelectorCreator(mapMemoize);
-
