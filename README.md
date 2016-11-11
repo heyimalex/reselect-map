@@ -1,5 +1,7 @@
 # reselect-map
 
+[![npm](https://img.shields.io/npm/v/reselect-map.svg)](https://www.npmjs.com/package/reselect-map)
+
 Selectors for mapping over collections.
 
 This is **alpha** software, use at your own risk.
