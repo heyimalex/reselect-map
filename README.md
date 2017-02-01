@@ -4,8 +4,6 @@
 
 Selectors for mapping over collections.
 
-This is **alpha** software, use at your own risk.
-
 ## Installation
 
 ```shell
