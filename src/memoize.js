@@ -152,9 +152,9 @@ class CacheSet {
 // you have a custom equality function.
 //
 // CustomEqualityMap was written to replace the internal map in that exact
-// situation. It's very customized for our use case, and nescessarily less
+// situation. It's very customized for our use case, and necessarily less
 // performant than a native map, but it's the best solution I could think of,
-// and common case performace shouldn't suffer much.
+// and common case performance shouldn't suffer much.
 //
 // The only notably slower things are cache misses and situations where the
 // key has changed but still satisfies the equality check.
