@@ -32,6 +32,6 @@
     "reselect": "^2.5.4"
   },
   "peerDependencies": {
-    "reselect": "2.X"
+    "reselect": "2.x || 3.x"
   }
 }
