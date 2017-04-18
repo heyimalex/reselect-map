@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1
+
+- Allow reselect 3.x via peer dependencies.
+
 ## v1.0.0
 
 - Added key argument to selectors using the key-based memoization function.
