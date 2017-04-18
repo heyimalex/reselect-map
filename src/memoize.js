@@ -1,92 +1,99 @@
-export function memoizeMap(fn, { mapper, unique = false, equalityCheck = defaultEqualityCheck }) {
-  const cache = new CacheMap(fn, mapper, unique, equalityCheck)
-  return memoizeWithCache(cache, equalityCheck)
+export function memoizeMap(
+  fn,
+  { mapper, unique = false, equalityCheck = defaultEqualityCheck }
+) {
+  return memoizeWithCache(
+    new CacheMap(fn, mapper, unique, equalityCheck),
+    equalityCheck
+  );
 }
 
-export function memoizeList(fn, { mapper, unique = false, equalityCheck = defaultEqualityCheck }) {
-  const cache = new CacheSet(fn, mapper, unique, equalityCheck)
-  return memoizeWithCache(cache, equalityCheck)
+export function memoizeList(
+  fn,
+  { mapper, unique = false, equalityCheck = defaultEqualityCheck }
+) {
+  return memoizeWithCache(
+    new CacheSet(fn, mapper, unique, equalityCheck),
+    equalityCheck
+  );
 }
 
 function defaultEqualityCheck(a, b) {
-  return a === b
+  return a === b;
 }
 
 function memoizeWithCache(cache, equalityCheck) {
-  let lastInput = null
-  let lastArgs = null
-  let lastResult = null
+  let lastInput = null;
+  let lastArgs = null;
+  let lastResult = null;
 
   return (input, ...args) => {
-    const argsHaveChanged = (
+    const argsHaveChanged =
       lastArgs === null ||
       args.length !== lastArgs.length ||
-      args.some((arg, idx) => !equalityCheck(arg, lastArgs[idx]))
-    )
+      args.some((arg, idx) => !equalityCheck(arg, lastArgs[idx]));
 
     if (argsHaveChanged) {
-      cache.clear()
+      cache.clear();
     } else if (equalityCheck(input, lastInput)) {
-      return lastResult
+      return lastResult;
     }
 
-    lastInput = input
-    lastArgs = args
-    lastResult = cache.compute(input, args)
-    return lastResult
-  }
+    lastInput = input;
+    lastArgs = args;
+    lastResult = cache.compute(input, args);
+    return lastResult;
+  };
 }
 
 // CacheMap maintains a cache that maps keys to inputs and outputs. A nice
 // way to think of it is as a collection of independent memoizing functions.
 // The key is used to look up the memoization function
 class CacheMap {
-
   constructor(fn, mapper, unique, equalityCheck) {
-    this.fn = fn
-    this.mapper = mapper
-    this.unique = unique
-    this.equalityCheck = equalityCheck
+    this.fn = fn;
+    this.mapper = mapper;
+    this.unique = unique;
+    this.equalityCheck = equalityCheck;
 
-    this.cache = null
+    this.cache = null;
   }
 
   clear() {
-    this.cache = null
+    this.cache = null;
   }
 
   compute(input, args) {
-    const { fn, unique, equalityCheck } = this
+    const { fn, unique, equalityCheck } = this;
 
-    const prevCache = this.cache
-    const nextCache = new Map()
+    const prevCache = this.cache;
+    const nextCache = new Map();
 
     const callback = (key, value) => {
       if (!unique) {
-        const record = nextCache.get(key)
+        const record = nextCache.get(key);
         if (record !== undefined) {
-          return record.result
+          return record.result;
         }
       }
 
       if (prevCache !== null) {
-        const record = prevCache.get(key)
+        const record = prevCache.get(key);
         if (record !== undefined && equalityCheck(record.value, value)) {
-          nextCache.set(key, record)
-          return record.result
+          nextCache.set(key, record);
+          return record.result;
         }
       }
 
-      const result = fn(value, ...args, key)
-      nextCache.set(key, { value, result })
-      return result
-    }
+      const result = fn(value, ...args, key);
+      nextCache.set(key, { value, result });
+      return result;
+    };
 
-    const result = this.mapper(input, callback)
-    this.cache = nextCache
-    return result
+    const result = this.mapper(input, callback);
+    this.cache = nextCache;
+    return result;
   }
-
 }
 
 // CacheSet maintains a cache that maps inputs directly to outputs. Consider
@@ -94,57 +101,53 @@ class CacheMap {
 // elements are computed, all removed elements are dropped, and the
 // intersection just stays in the cache.
 class CacheSet {
-
   constructor(fn, mapper, unique, equalityCheck) {
-    this.fn = fn
-    this.mapper = mapper
-    this.unique = unique
+    this.fn = fn;
+    this.mapper = mapper;
+    this.unique = unique;
 
-    this.makemap = (
-      equalityCheck === defaultEqualityCheck ?
-      () => new Map() :
-      () => new CustomEqualityMap(equalityCheck)
-    )
+    this.makemap = equalityCheck === defaultEqualityCheck
+      ? () => new Map()
+      : () => new CustomEqualityMap(equalityCheck);
 
-    this.cache = null
+    this.cache = null;
   }
 
   clear() {
-    this.cache = null
+    this.cache = null;
   }
 
   compute(input, args) {
-    const { fn, unique } = this
+    const { fn, unique } = this;
 
-    const prevCache = this.cache
-    const nextCache = this.makemap()
+    const prevCache = this.cache;
+    const nextCache = this.makemap();
 
-    const callback = (value) => {
+    const callback = value => {
       if (!unique) {
-        const result = nextCache.get(value)
+        const result = nextCache.get(value);
         if (result !== undefined) {
-          return result
+          return result;
         }
       }
 
       if (prevCache !== null) {
-        const result = prevCache.get(value)
+        const result = prevCache.get(value);
         if (result !== undefined) {
-          nextCache.set(value, result)
-          return result
+          nextCache.set(value, result);
+          return result;
         }
       }
 
-      const result = fn(value, ...args)
-      nextCache.set(value, result)
-      return result
-    }
+      const result = fn(value, ...args);
+      nextCache.set(value, result);
+      return result;
+    };
 
-    const result = this.mapper(input, callback)
-    this.cache = nextCache
-    return result
+    const result = this.mapper(input, callback);
+    this.cache = nextCache;
+    return result;
   }
-
 }
 
 // CacheSet would _ideally_ use a native map to maintain the internal mapping
@@ -159,38 +162,36 @@ class CacheSet {
 // The only notably slower things are cache misses and situations where the
 // key has changed but still satisfies the equality check.
 class CustomEqualityMap {
-
   constructor(equalityCheck) {
-    this.equalityCheck = equalityCheck
-    this.map = new Map()
-    this.keys = []
+    this.equalityCheck = equalityCheck;
+    this.map = new Map();
+    this.keys = [];
   }
 
   get(key) {
     // Search the internal map. Allows us to avoid doing a more expensive
     // lookup when the key satisfies native equality, likely the common case.
-    let value = this.map.get(key)
+    let value = this.map.get(key);
     if (value !== undefined) {
-      return value
+      return value;
     }
 
     // Linearly search through all keys.
-    const { keys, equalityCheck } = this
+    const { keys, equalityCheck } = this;
     for (let i = 0; i < keys.length; i++) {
       if (equalityCheck(key, keys[i])) {
-        value = this.map.get(keys[i])
-        this.map.set(key, value)
-        return value
+        value = this.map.get(keys[i]);
+        this.map.set(key, value);
+        return value;
       }
     }
-    return undefined
+    return undefined;
   }
 
   set(key, value) {
     // This will only be called when the key does not exist, so we can avoid
     // doing an existence check.
-    this.map.set(key, value)
-    this.keys.push(key)
+    this.map.set(key, value);
+    this.keys.push(key);
   }
-
 }
