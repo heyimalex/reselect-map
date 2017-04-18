@@ -58,20 +58,28 @@ describe('createArraySelector', () => {
     expect(sel(state)).toEqual([1, 2, 3, 4])
     expect(sel.recomputations()).toBe(4)
 
-    state.numbers = [1, 2, 3, 4]
+    state = Object.assign({}, state, {
+      numbers: [1, 2, 3, 4]
+    });
     expect(sel(state)).toEqual([1, 2, 3, 4])
     expect(sel.recomputations()).toBe(4)
 
-    state.mul1 = 2;
+    state = Object.assign({}, state, {
+      mul1: 2,
+    });
     expect(sel(state)).toEqual([2, 4, 6, 8])
     expect(sel.recomputations()).toBe(8)
 
-    state.mul1 = 1;
-    state.mul2 = 2;
+    state = Object.assign({}, state, {
+      mul1: 1,
+      mul2: 2,
+    });
     expect(sel(state)).toEqual([2, 4, 6, 8])
     expect(sel.recomputations()).toBe(12)
 
-    state.numbers = [2, 3, 4, 5]
+    state = Object.assign({}, state, {
+      numbers: [2, 3, 4, 5]
+    });
     expect(sel(state)).toEqual([4, 6, 8, 10])
     expect(sel.recomputations()).toBe(13)
   })
@@ -127,20 +135,28 @@ describe('createObjectSelector', () => {
     expect(sel(state)).toEqual({ a: 1, b: 2 })
     expect(sel.recomputations()).toBe(2)
 
-    state.numbers = { a: 1, b: 2 }
+    state = Object.assign({}, state, {
+      numbers: { a: 1, b: 2 },
+    });
     expect(sel(state)).toEqual({ a: 1, b: 2 })
     expect(sel.recomputations()).toBe(2)
 
-    state.mul1 = 2;
+    state = Object.assign({}, state, {
+      mul1: 2,
+    });
     expect(sel(state)).toEqual({ a: 2, b: 4 })
     expect(sel.recomputations()).toBe(4)
 
-    state.mul1 = 1;
-    state.mul2 = 2;
+    state = Object.assign({}, state, {
+      mul1: 1,
+      mul2: 2,
+    });
     expect(sel(state)).toEqual({ a: 2, b: 4 })
     expect(sel.recomputations()).toBe(6)
 
-    state.numbers = { a: 1, b: 1 }
+    state = Object.assign({}, state, {
+      numbers: { a: 1, b: 1 },
+    });
     expect(sel(state)).toEqual({ a: 2, b: 2 })
     expect(sel.recomputations()).toBe(7)
   })
@@ -165,20 +181,28 @@ describe('createObjectSelector', () => {
     expect(sel(state)).toEqual({ a: 'a:1', b: 'b:2' })
     expect(sel.recomputations()).toBe(2)
 
-    state.numbers = { a: 1, b: 2 }
+    state = Object.assign({}, state, {
+      numbers: { a: 1, b: 2 },
+    });
     expect(sel(state)).toEqual({ a: 'a:1', b: 'b:2' })
     expect(sel.recomputations()).toBe(2)
 
-    state.mul1 = 2;
+    state = Object.assign({}, state, {
+      mul1: 2,
+    });
     expect(sel(state)).toEqual({ a: 'a:2', b: 'b:4' })
     expect(sel.recomputations()).toBe(4)
 
-    state.mul1 = 1;
-    state.mul2 = 2;
+    state = Object.assign({}, state, {
+      mul1: 1,
+      mul2: 2,
+    });
     expect(sel(state)).toEqual({ a: 'a:2', b: 'b:4' })
     expect(sel.recomputations()).toBe(6)
 
-    state.numbers = { a: 1, b: 1 }
+    state = Object.assign({}, state, {
+      numbers: { a: 1, b: 1 }
+    });
     expect(sel(state)).toEqual({ a: 'a:2', b: 'b:2' })
     expect(sel.recomputations()).toBe(7)
   })
@@ -236,20 +260,28 @@ describe('createListSelector', () => {
     expect(sel(state)).toEqual([1, 2, 3, 4])
     expect(sel.recomputations()).toBe(4)
 
-    state.numbers = [1, 2, 3, 4]
+    state = Object.assign({}, state, {
+      numbers: [1, 2, 3, 4]
+    });
     expect(sel(state)).toEqual([1, 2, 3, 4])
     expect(sel.recomputations()).toBe(4)
 
-    state.mul1 = 2;
+    state = Object.assign({}, state, {
+      mul1: 2
+    });
     expect(sel(state)).toEqual([2, 4, 6, 8])
     expect(sel.recomputations()).toBe(8)
 
-    state.mul1 = 1;
-    state.mul2 = 2;
+    state = Object.assign({}, state, {
+      mul1: 1,
+      mul2: 2,
+    });
     expect(sel(state)).toEqual([2, 4, 6, 8])
     expect(sel.recomputations()).toBe(12)
 
-    state.numbers = [2, 3, 4, 5]
+    state = Object.assign({}, state, {
+      numbers: [2, 3, 4, 5]
+    });
     expect(sel(state)).toEqual([4, 6, 8, 10])
     expect(sel.recomputations()).toBe(13)
   })
