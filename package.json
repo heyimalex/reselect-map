@@ -12,7 +12,8 @@
   "scripts": {
     "compile": "babel -d lib/ src/ && ncp ./src/index.d.ts ./lib/index.d.ts",
     "prepublish": "npm run compile",
-    "test": "jest"
+    "test": "jest",
+    "test:typescript": "typings-tester --dir typescript_test"
   },
   "keywords": [
     "react",
@@ -35,5 +36,9 @@
   },
   "peerDependencies": {
     "reselect": "2.x || 3.x"
+  },
+  "dependencies": {
+    "typescript": "^2.3.4",
+    "typings-tester": "^0.2.2"
   }
 }
