@@ -1,6 +1,6 @@
 {
   "name": "reselect-map",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Selectors for mapping over collections.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
