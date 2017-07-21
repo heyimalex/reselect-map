@@ -106,9 +106,10 @@ class CacheSet {
     this.mapper = mapper;
     this.unique = unique;
 
-    this.makemap = equalityCheck === defaultEqualityCheck
-      ? () => new Map()
-      : () => new CustomEqualityMap(equalityCheck);
+    this.makemap =
+      equalityCheck === defaultEqualityCheck
+        ? () => new Map()
+        : () => new CustomEqualityMap(equalityCheck);
 
     this.cache = null;
   }

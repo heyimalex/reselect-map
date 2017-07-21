@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "compile": "babel -d lib/ src/ && ncp ./src/index.d.ts ./lib/index.d.ts",
+    "format": "prettier --write \"{src,test}/**/*.js\"",
     "prepublish": "npm run compile",
     "test": "jest",
     "test:typescript": "typings-tester --dir typescript_test"
@@ -32,6 +33,7 @@
     "immutable": "^3.8.1",
     "jest": "^20.0.4",
     "ncp": "^2.0.0",
+    "prettier": "^1.5.3",
     "reselect": "^3.0.1",
     "typescript": "^2.4.2",
     "typings-tester": "^0.2.2"
