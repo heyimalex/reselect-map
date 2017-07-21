@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.3
+
+- Move typescript and typings-tester to devDependencies.
+
 ## v1.0.2
 
 - Added typscript typings.
