@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.2
+
+- Added typscript typings.
+
 ## v1.0.1
 
 - Allow reselect 3.x via peer dependencies.
