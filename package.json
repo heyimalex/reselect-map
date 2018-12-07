@@ -1,6 +1,6 @@
 {
   "name": "reselect-map",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Selectors for mapping over collections.",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
@@ -12,7 +12,7 @@
   "scripts": {
     "compile": "babel -d lib/ src/ && ncp ./src/index.d.ts ./lib/index.d.ts",
     "format": "prettier --write \"{src,test}/**/*.js\"",
-    "prepublish": "npm run compile",
+    "prepare": "npm run compile",
     "test": "jest",
     "test:typescript": "typings-tester --dir typescript_test"
   },
@@ -28,17 +28,17 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-jest": "^20.0.3",
+    "babel-jest": "^23.6.0",
     "babel-preset-es2015": "^6.24.1",
     "immutable": "^3.8.1",
-    "jest": "^20.0.4",
+    "jest": "^23.6.0",
     "ncp": "^2.0.0",
     "prettier": "^1.5.3",
-    "reselect": "^3.0.1",
-    "typescript": "^2.4.2",
-    "typings-tester": "^0.2.2"
+    "reselect": "4.0.0",
+    "typescript": "^3.2.2",
+    "typings-tester": "^0.3.2"
   },
   "peerDependencies": {
-    "reselect": "2.x || 3.x"
+    "reselect": "2.x || 3.x || 4.x"
   }
 }
