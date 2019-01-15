@@ -30,7 +30,7 @@
     "babel-cli": "^6.24.1",
     "babel-jest": "^23.6.0",
     "babel-preset-es2015": "^6.24.1",
-    "immutable": "^3.8.1",
+    "immutable": "^4.0.0-rc.12",
     "jest": "^23.6.0",
     "ncp": "^2.0.0",
     "prettier": "^1.5.3",
