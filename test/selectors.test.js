@@ -106,6 +106,13 @@ describe("createObjectSelector", () => {
     expect(sel.recomputations()).toBe(6);
   });
 
+  test("object selector filtering undefined", () => {
+    const sel = createObjectSelector(state => state, element => undefined);
+
+    expect(Object.keys(sel({ a: 1, b: 2 })).length).toEqual(0);
+    expect(sel.recomputations()).toBe(2);
+  });
+
   test("another argument change", () => {
     const sel = createObjectSelector(
       state => state.numbers,

@@ -20,7 +20,9 @@ export const objectMemoize = (fn, equalityCheck) =>
     mapper(obj, callback) {
       const result = {};
       Object.keys(obj).forEach(key => {
-        result[key] = callback(key, obj[key]);
+        const value = callback(key, obj[key]);
+        if (!!value)
+          result[key] = value;
       });
       return result;
     }
