@@ -12,7 +12,7 @@ npm install reselect-map reselect
 
 ## Usage
 
-This package exposes a few special selector creators. They're mostly [the same as reselect's `createSelector`](https://github.com/reactjs/reselect), with one major difference: the first dependency gets [mapped](https://en.wikipedia.org/wiki/Map_(higher-order_function)) over.
+This package exposes a few special selector creators. They're mostly [the same as reselect's `createSelector`](https://github.com/reactjs/reselect), with one major difference: the first dependency gets [mapped](<https://en.wikipedia.org/wiki/Map_(higher-order_function)>) over.
 
 To give you a better idea, here's an example of how a selector to multiply an array of numbers would look in basic reselect and then using reselect-map.
 
@@ -156,7 +156,7 @@ const expensiveSelector = createSelector(
 );
 ```
 
-Notice that every time `largeArray` is changed, *every single element* of the array will be run back through `expensiveFunction`. If `largeArray` is very large or `expensiveFunction` is very expensive, this could be very slow.
+Notice that every time `largeArray` is changed, _every single element_ of the array will be run back through `expensiveFunction`. If `largeArray` is very large or `expensiveFunction` is very expensive, this could be very slow.
 
 What would be better is if we only recomputed those elements that are new or have changed. **That's what this package does.** Your `expensiveFunction` only runs on the elements it needs to.
 
