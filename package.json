@@ -13,7 +13,7 @@
     "compile": "babel -d lib/ src/ && ncp ./src/index.d.ts ./lib/index.d.ts",
     "format": "prettier --write \"{src,test,typescript_test}/**/*.{js,ts}\" README.md",
     "prepare": "npm run compile",
-    "test": "jest",
+    "test": "jest /test/",
     "test:typescript": "typings-tester --dir typescript_test"
   },
   "keywords": [
@@ -27,11 +27,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-jest": "^23.6.0",
-    "babel-preset-es2015": "^6.24.1",
+    "@babel/cli": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-jest": "^24.9.0",
     "immutable": "^3.8.1",
-    "jest": "^23.6.0",
+    "jest": "^24.9.0",
     "ncp": "^2.0.0",
     "prettier": "^1.18.2",
     "reselect": "4.0.0",
