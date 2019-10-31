@@ -7,7 +7,7 @@ import {
 
 export as namespace ReselectMap;
 
-type ObjectMap<T> = {[key: string]: T;} | {[key: number]: T;};
+type ObjectMap<T> = { [key: string]: T; } | { [key: number]: T; };
 
 /* 1 selector */
 
