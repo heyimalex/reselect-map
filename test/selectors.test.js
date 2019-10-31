@@ -4,7 +4,8 @@ import {
   createArraySelector,
   createObjectSelector,
   createListSelector,
-  createMapSelector
+  createMapSelector,
+  createArraySelectorCreator
 } from "../src";
 
 describe("createArraySelector", () => {
@@ -301,4 +302,27 @@ describe("createMapSelector", () => {
     ).toBeTruthy();
     expect(sel.recomputations()).toBe(4);
   });
+});
+
+test("custom equality function", () => {
+  const sel = createArraySelectorCreator(Immutable.is)(
+    state => state,
+    element => element.get("v") * 5
+  );
+
+  let a = Immutable.Map({ v: 1 });
+  let b = Immutable.Map({ v: 2 });
+  expect(a === b).toBeFalsy();
+  expect(Immutable.is(a, b)).toBeFalsy();
+
+  expect(sel([a, b])).toEqual([5, 10]);
+  expect(sel([a, b])).toEqual([5, 10]);
+  expect(sel.recomputations()).toBe(2);
+
+  let c = Immutable.Map({ v: 2 });
+  expect(b === c).toBeFalsy();
+  expect(Immutable.is(b, c)).toBeTruthy();
+
+  expect(sel([a, c])).toEqual([5, 10]);
+  expect(sel.recomputations()).toBe(2);
 });

@@ -57,12 +57,12 @@ export const mapMemoize = (fn, equalityCheck) =>
 // wrapping the result func and defaultMemoize for wrapping the selector. It
 // sucks that we're relying on an implementation detail but I'll be back to fix
 // this code again whenever it breaks :)
-function createMappedSelectorCreator(memoize) {
+function createMappedSelectorCreator(memoize, ...memoizeOptions) {
   return createSelectorCreator((fn, mapmem) => {
     if (mapmem === true) {
-      return memoize(fn);
+      return memoize(fn, ...memoizeOptions);
     } else {
-      return defaultMemoize(fn);
+      return defaultMemoize(fn, ...memoizeOptions);
     }
   }, true);
 }
@@ -71,3 +71,12 @@ export const createArraySelector = createMappedSelectorCreator(arrayMemoize);
 export const createObjectSelector = createMappedSelectorCreator(objectMemoize);
 export const createListSelector = createMappedSelectorCreator(listMemoize);
 export const createMapSelector = createMappedSelectorCreator(mapMemoize);
+
+export const createArraySelectorCreator = equalityCheck =>
+  createMappedSelectorCreator(arrayMemoize, equalityCheck);
+export const createObjectSelectorCreator = equalityCheck =>
+  createMappedSelectorCreator(objectMemoize, equalityCheck);
+export const createListSelectorCreator = equalityCheck =>
+  createMappedSelectorCreator(listMemoize, equalityCheck);
+export const createMapSelectorCreator = equalityCheck =>
+  createMappedSelectorCreator(mapMemoize, equalityCheck);

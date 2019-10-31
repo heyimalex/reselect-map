@@ -20,6 +20,13 @@ export const objectMemoize: MemoizeFunc;
 export const listMemoize: MemoizeFunc;
 export const mapMemoize: MemoizeFunc;
 
+export function createArraySelectorCreator(
+  equalityCheck: <T>(a: T, b: T) => boolean
+): typeof createArraySelector;
+export function createObjectSelectorCreator(
+  equalityCheck: <T>(a: T, b: T) => boolean
+): typeof createObjectSelector;
+
 /* 1 selector */
 
 export function createArraySelector<S, E, T>(

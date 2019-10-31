@@ -1,4 +1,8 @@
-import { createArraySelector, createObjectSelector } from "../src/index";
+import {
+  createArraySelector,
+  createObjectSelector,
+  createArraySelectorCreator
+} from "../src/index";
 
 function testArraySelector() {
   type State = {
@@ -51,4 +55,23 @@ function testObjectSelector() {
     (state: State) => state.items,
     (elem, mul) => elem * mul
   );
+}
+
+function testArraySelectorCreator() {
+  type State = {
+    items: number[];
+    mul: number;
+  };
+
+  function customEqualityFn<T>(a: T, b: T): boolean {
+    return true;
+  }
+
+  const selector = createArraySelectorCreator(customEqualityFn)(
+    (state: State) => state.items,
+    (state: State) => state.mul,
+    (elem, mul) => elem * mul
+  );
+
+  const foo: number[] = selector({ items: [1, 2, 3], mul: 5 });
 }
