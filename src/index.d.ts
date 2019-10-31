@@ -7,7 +7,7 @@ import {
 
 export as namespace ReselectMap;
 
-type ObjectMap<T> = { [key: string]: T; } | { [key: number]: T; };
+type ObjectMap<T> = {[key: string]: T;} | {[key: number]: T;};
 
 /* 1 selector */
 
@@ -1136,3 +1136,11 @@ export function createObjectSelector<S, P, E, R2, R3, R4, R5, R6, R7, R8, R9, R1
     ],
     combiner: (elem: E, res2: R2, res3: R3, res4: R4, res5: R5, res6: R6, res7: R7, res8: R8, res9: R9, res10: R10, res11: R11, res12: R12, key: string) => T,
 ): OutputParametricSelector<S, P, ObjectMap<T>, (elem: E, res2: R2, res3: R3, res4: R4, res5: R5, res6: R6, res7: R7, res8: R8, res9: R9, res10: R10, res11: R11, res12: R12, key: string) => T>;
+
+// typings for memoize functions
+
+export type MemoizeFunc = <F extends Function>(fn: F, equalityCheck: <T>(a: T, b: T) => boolean) => F;
+export const arrayMemoize: MemoizeFunc;
+export const objectMemoize: MemoizeFunc;
+export const listMemoize: MemoizeFunc;
+export const mapMemoize: MemoizeFunc;
