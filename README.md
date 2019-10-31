@@ -51,7 +51,7 @@ So why would you use this? The answer is that you probably shouldn't! However, i
 
 The only thing to know is that the first dependency/selector passed is the one that gets mapped over, and all other selectors work just like they do in reselect proper. Additionally, key-based selectors like `createObjectSelector` and `createMapSelector` pass the key as the final argument.
 
-**NOTICE**: This package makes use of the builtin Map. If you need to support environments without Map, you are going to have to polyfill it.
+**NOTICE**: This package makes use of the builtin Set and Map. If you need to support environments without Set or Map, you are going to have to polyfill it.
 
 ### createArraySelector
 
