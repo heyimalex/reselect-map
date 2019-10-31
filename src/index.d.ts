@@ -9,6 +9,17 @@ export as namespace ReselectMap;
 
 type ObjectMap<T> = { [key: string]: T } | { [key: number]: T };
 
+// Typings for memoize functions
+
+export type MemoizeFunc = <F extends Function>(
+  fn: F,
+  equalityCheck?: <T>(a: T, b: T) => boolean
+) => F;
+export const arrayMemoize: MemoizeFunc;
+export const objectMemoize: MemoizeFunc;
+export const listMemoize: MemoizeFunc;
+export const mapMemoize: MemoizeFunc;
+
 /* 1 selector */
 
 export function createArraySelector<S, E, T>(
