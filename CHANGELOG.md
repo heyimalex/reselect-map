@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.5
+
+- Add new functions for creating selectors with custom equality functions.
+- Add typings for public memoization functions.
+
+## v1.0.4
+
+- Fixed incompatibility with reselect v4.0.0.
+
 ## v1.0.3
 
 - Move typescript and typings-tester to devDependencies.
