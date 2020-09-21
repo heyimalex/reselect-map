@@ -1,7 +1,9 @@
 import {
   createArraySelector,
   createObjectSelector,
-  createArraySelectorCreator
+  createArraySelectorCreator,
+  createMappedSelectorCreator,
+  memoizeMap
 } from "../src/index";
 
 function testArraySelector() {
@@ -75,3 +77,17 @@ function testArraySelectorCreator() {
 
   const foo: number[] = selector({ items: [1, 2, 3], mul: 5 });
 }
+
+const arrayWithIndexMemoize = <F extends Function, T> (fn: F, equalityCheck: <T>(a: T, b: T) => boolean) =>
+  memoizeMap(fn, {
+    equalityCheck,
+    mapper: (arr: Array<T>, callback: (key: number, value: T) => T) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i++) {
+        result[i] = callback(i, arr[i]);
+      }
+      return result;
+    }
+  });
+
+createMappedSelectorCreator(arrayWithIndexMemoize);
