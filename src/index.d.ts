@@ -4,6 +4,11 @@ import {
   OutputSelector,
   OutputParametricSelector
 } from "reselect";
+import {
+  Iterable,
+  List
+} from "immutable";
+
 
 export as namespace ReselectMap;
 
@@ -19,6 +24,33 @@ export const arrayMemoize: MemoizeFunc;
 export const objectMemoize: MemoizeFunc;
 export const listMemoize: MemoizeFunc;
 export const mapMemoize: MemoizeFunc;
+
+export function createMappedSelectorCreator(
+  memoizeFunc: MemoizeFunc,
+  equalityCheck?: <T>(a: T, b: T) => boolean
+): typeof createArraySelector;
+
+type ArrayMapper<V> = (arr: Array<V>, callback: (value: V) => V) => Array<V>;
+type ImmutableListMapper<V> = (list: List<V>, callback: (value: V) => V) => List<V>;
+
+export type MemoizeListOptions<V> = {
+  mapper: ArrayMapper<V> | ImmutableListMapper<V>;
+  equalityCheck: <T>(a: T, b: T) => boolean;
+  unique?: boolean;
+};
+export function memoizeList<F extends Function, V>(fn: F, memoizeOptions: MemoizeListOptions<V>): F;
+
+type ArrayWithIndexMapper<V> = (arr: Array<V>, callback: (key: number, value: V) => V) => Array<V>;
+type ObjectMapper<K extends keyof any, V> = (record: Record<K, V>, callback: (key: K, value: V) => V) => Record<K, V>;
+type ImmutableIterableMapper<K, V> = (arr: Iterable<K, V>, callback: (key: K, value: V) => V) => Iterable<K, V>;
+
+export type MemoizeMapOptions<K extends keyof any, V> = {
+  mapper: ArrayWithIndexMapper<V> | ObjectMapper<K, V> | ImmutableIterableMapper<K, V>;
+  equalityCheck: <T>(a: T, b: T) => boolean;
+  unique?: boolean | true;
+};
+
+export function memoizeMap<F extends Function, K extends keyof any, V>(fn: F, memoizeOptions: MemoizeMapOptions<K, V>): F;
 
 export function createArraySelectorCreator(
   equalityCheck: <T>(a: T, b: T) => boolean
