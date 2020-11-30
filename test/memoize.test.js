@@ -3,7 +3,7 @@ import { memoizeList, memoizeMap } from "../src/memoize";
 describe("memoizeList", () => {
   test("basic memoizeList", () => {
     let recomputations = 0;
-    let func = v => {
+    let func = (v) => {
       recomputations++;
       return v * 5;
     };
@@ -54,13 +54,13 @@ describe("memoizeList", () => {
 describe("memoizeMap", () => {
   test("basic memoizeMap", () => {
     let recomputations = 0;
-    let func = v => {
+    let func = (v) => {
       recomputations++;
       return v * 5;
     };
     let mapper = (obj, callback) => {
       const result = {};
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         if (obj.hasOwnProperty(key)) {
           result[key] = callback(key, obj[key]);
         }
@@ -94,7 +94,7 @@ describe("memoizeMap", () => {
     };
     let mapper = (obj, callback) => {
       const result = {};
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         if (obj.hasOwnProperty(key)) {
           result[key] = callback(key, obj[key]);
         }
@@ -119,7 +119,7 @@ describe("memoizeMap", () => {
     };
     let mapper = (obj, callback) => {
       const result = {};
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         if (obj.hasOwnProperty(key)) {
           result[key] = callback(key, obj[key]);
         }

@@ -1,7 +1,7 @@
 import {
   createArraySelector,
   createObjectSelector,
-  createArraySelectorCreator
+  createArraySelectorCreator,
 } from "../src/index";
 
 function testArraySelector() {
@@ -43,7 +43,7 @@ function testObjectSelector() {
 
   const foo: { [key: string]: string } = selector({
     items: { a: 1, b: 2 },
-    mul: 5
+    mul: 5,
   });
 
   // typings:expect-error

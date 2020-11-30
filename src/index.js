@@ -10,7 +10,7 @@ export const arrayMemoize = (fn, equalityCheck) =>
         result[i] = callback(arr[i]);
       }
       return result;
-    }
+    },
   });
 
 export const objectMemoize = (fn, equalityCheck) =>
@@ -19,11 +19,11 @@ export const objectMemoize = (fn, equalityCheck) =>
     unique: true,
     mapper(obj, callback) {
       const result = {};
-      Object.keys(obj).forEach(key => {
+      Object.keys(obj).forEach((key) => {
         result[key] = callback(key, obj[key]);
       });
       return result;
-    }
+    },
   });
 
 export const listMemoize = (fn, equalityCheck) =>
@@ -31,7 +31,7 @@ export const listMemoize = (fn, equalityCheck) =>
     equalityCheck,
     mapper(mapable, callback) {
       return mapable.map(callback);
-    }
+    },
   });
 
 export const mapMemoize = (fn, equalityCheck) =>
@@ -39,7 +39,7 @@ export const mapMemoize = (fn, equalityCheck) =>
     equalityCheck,
     mapper(mapable, callback) {
       return mapable.map((v, k) => callback(k, v));
-    }
+    },
   });
 
 // reselect's createSelectorCreator will use the passed memoization function
@@ -72,11 +72,11 @@ export const createObjectSelector = createMappedSelectorCreator(objectMemoize);
 export const createListSelector = createMappedSelectorCreator(listMemoize);
 export const createMapSelector = createMappedSelectorCreator(mapMemoize);
 
-export const createArraySelectorCreator = equalityCheck =>
+export const createArraySelectorCreator = (equalityCheck) =>
   createMappedSelectorCreator(arrayMemoize, equalityCheck);
-export const createObjectSelectorCreator = equalityCheck =>
+export const createObjectSelectorCreator = (equalityCheck) =>
   createMappedSelectorCreator(objectMemoize, equalityCheck);
-export const createListSelectorCreator = equalityCheck =>
+export const createListSelectorCreator = (equalityCheck) =>
   createMappedSelectorCreator(listMemoize, equalityCheck);
-export const createMapSelectorCreator = equalityCheck =>
+export const createMapSelectorCreator = (equalityCheck) =>
   createMappedSelectorCreator(mapMemoize, equalityCheck);

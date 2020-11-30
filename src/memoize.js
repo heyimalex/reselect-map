@@ -124,7 +124,7 @@ class CacheSet {
     const prevCache = this.cache;
     const nextCache = this.makemap();
 
-    const callback = value => {
+    const callback = (value) => {
       if (!unique) {
         const result = nextCache.get(value);
         if (result !== undefined) {
