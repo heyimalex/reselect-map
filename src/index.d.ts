@@ -2,7 +2,7 @@ import {
   Selector,
   ParametricSelector,
   OutputSelector,
-  OutputParametricSelector
+  OutputParametricSelector,
 } from "reselect";
 
 export as namespace ReselectMap;

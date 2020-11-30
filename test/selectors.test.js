@@ -5,12 +5,15 @@ import {
   createObjectSelector,
   createListSelector,
   createMapSelector,
-  createArraySelectorCreator
+  createArraySelectorCreator,
 } from "../src";
 
 describe("createArraySelector", () => {
   test("basic array selector", () => {
-    const sel = createArraySelector(state => state, element => element * 5);
+    const sel = createArraySelector(
+      (state) => state,
+      (element) => element * 5
+    );
 
     expect(sel([1, 2, 3, 4])).toEqual([5, 10, 15, 20]);
     expect(sel([1, 2, 3, 4])).toEqual([5, 10, 15, 20]);
@@ -37,16 +40,16 @@ describe("createArraySelector", () => {
 
   test("another argument change", () => {
     const sel = createArraySelector(
-      state => state.numbers,
-      state => state.mul1,
-      state => state.mul2,
+      (state) => state.numbers,
+      (state) => state.mul1,
+      (state) => state.mul2,
       (element, mul1, mul2) => element * mul1 * mul2
     );
 
     let state = {
       numbers: [1, 2, 3, 4],
       mul1: 1,
-      mul2: 1
+      mul2: 1,
     };
 
     expect(sel(state)).toEqual([1, 2, 3, 4]);
@@ -56,26 +59,26 @@ describe("createArraySelector", () => {
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
-      numbers: [1, 2, 3, 4]
+      numbers: [1, 2, 3, 4],
     });
     expect(sel(state)).toEqual([1, 2, 3, 4]);
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
-      mul1: 2
+      mul1: 2,
     });
     expect(sel(state)).toEqual([2, 4, 6, 8]);
     expect(sel.recomputations()).toBe(8);
 
     state = Object.assign({}, state, {
       mul1: 1,
-      mul2: 2
+      mul2: 2,
     });
     expect(sel(state)).toEqual([2, 4, 6, 8]);
     expect(sel.recomputations()).toBe(12);
 
     state = Object.assign({}, state, {
-      numbers: [2, 3, 4, 5]
+      numbers: [2, 3, 4, 5],
     });
     expect(sel(state)).toEqual([4, 6, 8, 10]);
     expect(sel.recomputations()).toBe(13);
@@ -84,7 +87,10 @@ describe("createArraySelector", () => {
 
 describe("createObjectSelector", () => {
   test("basic object selector", () => {
-    const sel = createObjectSelector(state => state, element => element * 5);
+    const sel = createObjectSelector(
+      (state) => state,
+      (element) => element * 5
+    );
 
     expect(sel({ a: 1, b: 2 })).toEqual({ a: 5, b: 10 });
     expect(sel.recomputations()).toBe(2);
@@ -109,16 +115,16 @@ describe("createObjectSelector", () => {
 
   test("another argument change", () => {
     const sel = createObjectSelector(
-      state => state.numbers,
-      state => state.mul1,
-      state => state.mul2,
+      (state) => state.numbers,
+      (state) => state.mul1,
+      (state) => state.mul2,
       (element, mul1, mul2) => element * mul1 * mul2
     );
 
     let state = {
       numbers: { a: 1, b: 2 },
       mul1: 1,
-      mul2: 1
+      mul2: 1,
     };
 
     expect(sel(state)).toEqual({ a: 1, b: 2 });
@@ -128,26 +134,26 @@ describe("createObjectSelector", () => {
     expect(sel.recomputations()).toBe(2);
 
     state = Object.assign({}, state, {
-      numbers: { a: 1, b: 2 }
+      numbers: { a: 1, b: 2 },
     });
     expect(sel(state)).toEqual({ a: 1, b: 2 });
     expect(sel.recomputations()).toBe(2);
 
     state = Object.assign({}, state, {
-      mul1: 2
+      mul1: 2,
     });
     expect(sel(state)).toEqual({ a: 2, b: 4 });
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
       mul1: 1,
-      mul2: 2
+      mul2: 2,
     });
     expect(sel(state)).toEqual({ a: 2, b: 4 });
     expect(sel.recomputations()).toBe(6);
 
     state = Object.assign({}, state, {
-      numbers: { a: 1, b: 1 }
+      numbers: { a: 1, b: 1 },
     });
     expect(sel(state)).toEqual({ a: 2, b: 2 });
     expect(sel.recomputations()).toBe(7);
@@ -155,16 +161,16 @@ describe("createObjectSelector", () => {
 
   test("with key argument", () => {
     const sel = createObjectSelector(
-      state => state.numbers,
-      state => state.mul1,
-      state => state.mul2,
+      (state) => state.numbers,
+      (state) => state.mul1,
+      (state) => state.mul2,
       (element, mul1, mul2, key) => `${key}:${element * mul1 * mul2}`
     );
 
     let state = {
       numbers: { a: 1, b: 2 },
       mul1: 1,
-      mul2: 1
+      mul2: 1,
     };
 
     expect(sel(state)).toEqual({ a: "a:1", b: "b:2" });
@@ -174,26 +180,26 @@ describe("createObjectSelector", () => {
     expect(sel.recomputations()).toBe(2);
 
     state = Object.assign({}, state, {
-      numbers: { a: 1, b: 2 }
+      numbers: { a: 1, b: 2 },
     });
     expect(sel(state)).toEqual({ a: "a:1", b: "b:2" });
     expect(sel.recomputations()).toBe(2);
 
     state = Object.assign({}, state, {
-      mul1: 2
+      mul1: 2,
     });
     expect(sel(state)).toEqual({ a: "a:2", b: "b:4" });
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
       mul1: 1,
-      mul2: 2
+      mul2: 2,
     });
     expect(sel(state)).toEqual({ a: "a:2", b: "b:4" });
     expect(sel.recomputations()).toBe(6);
 
     state = Object.assign({}, state, {
-      numbers: { a: 1, b: 1 }
+      numbers: { a: 1, b: 1 },
     });
     expect(sel(state)).toEqual({ a: "a:2", b: "b:2" });
     expect(sel.recomputations()).toBe(7);
@@ -202,7 +208,10 @@ describe("createObjectSelector", () => {
 
 describe("createListSelector", () => {
   test("basic list selector", () => {
-    const sel = createListSelector(state => state, element => element * 5);
+    const sel = createListSelector(
+      (state) => state,
+      (element) => element * 5
+    );
 
     expect(sel([1, 2, 3, 4])).toEqual([5, 10, 15, 20]);
     expect(sel([1, 2, 3, 4])).toEqual([5, 10, 15, 20]);
@@ -229,16 +238,16 @@ describe("createListSelector", () => {
 
   test("another argument change", () => {
     const sel = createListSelector(
-      state => state.numbers,
-      state => state.mul1,
-      state => state.mul2,
+      (state) => state.numbers,
+      (state) => state.mul1,
+      (state) => state.mul2,
       (element, mul1, mul2) => element * mul1 * mul2
     );
 
     let state = {
       numbers: [1, 2, 3, 4],
       mul1: 1,
-      mul2: 1
+      mul2: 1,
     };
 
     expect(sel(state)).toEqual([1, 2, 3, 4]);
@@ -248,26 +257,26 @@ describe("createListSelector", () => {
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
-      numbers: [1, 2, 3, 4]
+      numbers: [1, 2, 3, 4],
     });
     expect(sel(state)).toEqual([1, 2, 3, 4]);
     expect(sel.recomputations()).toBe(4);
 
     state = Object.assign({}, state, {
-      mul1: 2
+      mul1: 2,
     });
     expect(sel(state)).toEqual([2, 4, 6, 8]);
     expect(sel.recomputations()).toBe(8);
 
     state = Object.assign({}, state, {
       mul1: 1,
-      mul2: 2
+      mul2: 2,
     });
     expect(sel(state)).toEqual([2, 4, 6, 8]);
     expect(sel.recomputations()).toBe(12);
 
     state = Object.assign({}, state, {
-      numbers: [2, 3, 4, 5]
+      numbers: [2, 3, 4, 5],
     });
     expect(sel(state)).toEqual([4, 6, 8, 10]);
     expect(sel.recomputations()).toBe(13);
@@ -276,7 +285,10 @@ describe("createListSelector", () => {
 
 describe("createMapSelector", () => {
   test("basic map selector", () => {
-    const sel = createMapSelector(state => state, element => element * 5);
+    const sel = createMapSelector(
+      (state) => state,
+      (element) => element * 5
+    );
 
     expect(
       Immutable.is(
@@ -306,8 +318,8 @@ describe("createMapSelector", () => {
 
 test("custom equality function", () => {
   const sel = createArraySelectorCreator(Immutable.is)(
-    state => state,
-    element => element.get("v") * 5
+    (state) => state,
+    (element) => element.get("v") * 5
   );
 
   let a = Immutable.Map({ v: 1 });

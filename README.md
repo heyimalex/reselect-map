@@ -22,16 +22,15 @@ import { createArraySelector } from "reselect-map";
 
 const exampleState = {
   numbers: [1, 2, 3],
-  multiplier: 5
+  multiplier: 5,
 };
 
-const numbers = state => state.numbers;
-const multiplier = state => state.multiplier;
+const numbers = (state) => state.numbers;
+const multiplier = (state) => state.multiplier;
 
 // reselect
-const mul1 = createSelector(
-  [numbers, multiplier],
-  (numbers, multiplier) => numbers.map(n => n * multiplier)
+const mul1 = createSelector([numbers, multiplier], (numbers, multiplier) =>
+  numbers.map((n) => n * multiplier)
 );
 
 // reselect-map
@@ -62,12 +61,12 @@ import { createArraySelector } from "reselect-map";
 
 const exampleState = {
   numbers: [1, 2, 3],
-  multiplier: 5
+  multiplier: 5,
 };
 
 const mul = createArraySelector(
-  state => state.numbers,
-  state => state.multiplier,
+  (state) => state.numbers,
+  (state) => state.multiplier,
   (number, multiplier) => number * multiplier
 );
 
@@ -83,12 +82,12 @@ import { createObjectSelector } from "reselect-map";
 
 const exampleState = {
   numbers: { a: 1, b: 2 },
-  multiplier: 5
+  multiplier: 5,
 };
 
 const mul = createObjectSelector(
-  state => state.numbers,
-  state => state.multiplier,
+  (state) => state.numbers,
+  (state) => state.multiplier,
   (number, multiplier, key) => `${key}:${number * multiplier}`
 );
 
@@ -105,12 +104,12 @@ import Immutable from "immutable";
 
 const exampleState = {
   numbers: Immutable.List([1, 2, 3]),
-  multiplier: 5
+  multiplier: 5,
 };
 
 const mul = createListSelector(
-  state => state.numbers,
-  state => state.multiplier,
+  (state) => state.numbers,
+  (state) => state.multiplier,
   (number, multiplier) => number * multiplier
 );
 
@@ -127,12 +126,12 @@ import Immutable from "immutable";
 
 const exampleState = {
   numbers: Immutable.Map({ a: 1, b: 2 }),
-  multiplier: 5
+  multiplier: 5,
 };
 
 const mul = createMapSelector(
-  state => state.numbers,
-  state => state.multiplier,
+  (state) => state.numbers,
+  (state) => state.multiplier,
   (number, multiplier, key) => `${key}:${number * multiplier}`
 );
 
@@ -151,8 +150,8 @@ When doing **very expensive** computations on elements of a collection, reselect
 import { createSelector } from "reselect";
 
 const expensiveSelector = createSelector(
-  state => state.largeArray,
-  largeArray => largeArray.map(expensiveFunction)
+  (state) => state.largeArray,
+  (largeArray) => largeArray.map(expensiveFunction)
 );
 ```
 
