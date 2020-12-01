@@ -20,11 +20,30 @@ export const objectMemoize: MemoizeFunc;
 export const listMemoize: MemoizeFunc;
 export const mapMemoize: MemoizeFunc;
 
+// Typing these was too diffcult, todo for someone smarter than me.
+
+export function memoizeMap(): any;
+export function memoizeList(): any;
+export function createMappedSelectorCreator(): any;
+export function createListSelector(): any;
+export function createMapSelector(): any;
+
+type EqualityCheck = (a: any, b: any) => boolean;
+
+export function createListSelectorCreator(
+  equalityCheck: EqualityCheck
+): typeof createListSelector;
+
+export function createMapSelectorCreator(
+  equalityCheck: EqualityCheck
+): typeof createMapSelector;
+
 export function createArraySelectorCreator(
-  equalityCheck: <T>(a: T, b: T) => boolean
+  equalityCheck: EqualityCheck
 ): typeof createArraySelector;
+
 export function createObjectSelectorCreator(
-  equalityCheck: <T>(a: T, b: T) => boolean
+  equalityCheck: EqualityCheck
 ): typeof createObjectSelector;
 
 /* 1 selector */
