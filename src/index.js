@@ -1,6 +1,8 @@
 import { createSelectorCreator, defaultMemoize } from "reselect";
 import { memoizeMap, memoizeList } from "./memoize";
 
+export { memoizeMap, memoizeList };
+
 export const arrayMemoize = (fn, equalityCheck) =>
   memoizeList(fn, {
     equalityCheck,
@@ -57,7 +59,7 @@ export const mapMemoize = (fn, equalityCheck) =>
 // wrapping the result func and defaultMemoize for wrapping the selector. It
 // sucks that we're relying on an implementation detail but I'll be back to fix
 // this code again whenever it breaks :)
-function createMappedSelectorCreator(memoize, ...memoizeOptions) {
+export function createMappedSelectorCreator(memoize, ...memoizeOptions) {
   return createSelectorCreator((fn, mapmem) => {
     if (mapmem === true) {
       return memoize(fn, ...memoizeOptions);
