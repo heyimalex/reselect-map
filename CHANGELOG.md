@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.6
+
+- Expose more internal functions, and provide minimal ts stubs.
+
 ## v1.0.5
 
 - Add new functions for creating selectors with custom equality functions.
